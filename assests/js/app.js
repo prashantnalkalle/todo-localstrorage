@@ -13,6 +13,22 @@ let todoArr =[]
 
 // cl(JSON.parse(localStorage.getItem("todoArr")))
 
+const uuid = () => {
+  return String('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx').replace(
+    /[xy]/g,
+    character => {
+      const random = (Math.random() * 16) | 0
+      const value = character === 'x' ? random : (random & 0x3) | 0x8
+      return value.toString(16)
+    }
+  )
+}
+
+
+
+
+
+
 
 todoArr = JSON.parse(localStorage.getItem('todoArr'))
 
@@ -35,9 +51,41 @@ function templating(arr){
   todocontainer.innerHTML = result;
 }
 
+function onSubmit(eve){
+  eve.preventDefault()
+
+  let newobj ={
+    todoItem : todoitem.value,
+    todoId : uuid()
+  }
+
+  todoArr.push(newobj)
+
+  localStorage.setItem('todoArr',JSON.stringify(todoArr))
+
+  let li =document.createElement('li')
+  li.className ='list-group-item d-flex justify-content-between'
+  
+  li.id = newobj.todoId
+
+  li.innerHTML =`<strong>${newobj.todoItem}</strong>
+                  <div>
+                    <i class="fa-solid fa-trash fa-2x text-primary" ></i>
+                    <i class="fa-regular fa-pen-to-square fa-2x text-danger"></i>
+                  </div>`
+
+  todocontainer.append(li);
+
+}
+
+
+
+
+
+
 
 templating(todoArr)
-
+todoform.addEventListener('submit',onSubmit)
 
 
 
@@ -133,4 +181,4 @@ templating(todoArr)
 //   {
 //     todoItem: "HTML",
 //     todoId: "2qwe12-231-231wd-ew11563",
-//   },
+//   }
