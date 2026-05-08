@@ -1,0 +1,29 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #ededed;
+}
+
+.card{
+    border-radius: 10px;
+}
+
+
+.list-group ul{
+    border-radius: 10px;
+}
+.list-group li{
+    transition: all .3s linear;
+   
+}
+
+.list-group li:hover{
+    transform: scale(1.03);
+    box-shadow: 20px 20px 50px 10px pink inset;
+}
+.list-group li i:hover{
+    transform: scale(1.1);
+}
