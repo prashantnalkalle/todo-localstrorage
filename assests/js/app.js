@@ -25,7 +25,13 @@ const uuid = () => {
 }
 
 
-
+function snackbar(msg){
+  Swal.fire({
+    title : msg,
+    icon : 'success',
+    timer : 3000
+  })
+}
 
 
 
@@ -40,8 +46,8 @@ function templating(arr){
     result +=`<li class='list-group-item d-flex justify-content-between' id='${ele.todoId}'>
                   <strong>${ele.todoItem}</strong>
                   <div>
-                    <i class="fa-solid fa-trash fa-2x text-primary" ></i>
-                    <i class="fa-regular fa-pen-to-square fa-2x text-danger"></i>
+                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnEdit(this)' ></i>
+                    <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnRemove(this)'></i>
                   </div>
               </li>
     `     
@@ -70,11 +76,34 @@ function onSubmit(eve){
 
   li.innerHTML =`<strong>${newobj.todoItem}</strong>
                   <div>
-                    <i class="fa-solid fa-trash fa-2x text-primary" ></i>
-                    <i class="fa-regular fa-pen-to-square fa-2x text-danger"></i>
+                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnEdit(this)' ></i>
+                    <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnRemove(this)'></i>
                   </div>`
 
   todocontainer.append(li);
+
+  snackbar(`The new TodoItem ${newobj.todoItem} is added successfully!!!`)
+
+}
+
+
+function OnRemove(ele){
+  let removeId = ele.closest('li').id
+
+  let getconfirm = confirm('Are You Sure You Want To Delete ?')
+
+  if(getconfirm){
+    let index = todoArr.findIndex(ele=> ele.todoId == removeId)
+
+  let removeObj = todoArr.splice(index,1)
+
+  localStorage.setItem('todoArr',JSON.stringify(todoArr))
+
+  ele.closest('li').remove()
+
+  snackbar(`The Todo Item ${removeObj[0].todoItem} is removed!!!`)
+  }
+  
 
 }
 
@@ -84,8 +113,12 @@ function onSubmit(eve){
 
 
 
+
+
 templating(todoArr)
 todoform.addEventListener('submit',onSubmit)
+updatetodo.addEventListener('click',Onupdate)
+
 
 
 
