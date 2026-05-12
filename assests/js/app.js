@@ -46,8 +46,8 @@ function templating(arr){
     result +=`<li class='list-group-item d-flex justify-content-between' id='${ele.todoId}'>
                   <strong>${ele.todoItem}</strong>
                   <div>
-                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnEdit(this)' ></i>
-                    <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnRemove(this)'></i>
+                     <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnEdit(this)'></i>
+                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnRemove(this)' ></i>
                   </div>
               </li>
     `     
@@ -76,8 +76,9 @@ function onSubmit(eve){
 
   li.innerHTML =`<strong>${newobj.todoItem}</strong>
                   <div>
-                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnEdit(this)' ></i>
-                    <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnRemove(this)'></i>
+                    <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnEdit(this)'></i>
+                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnRemove(this)' ></i>
+
                   </div>`
 
   todocontainer.append(li);
