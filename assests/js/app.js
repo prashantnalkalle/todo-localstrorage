@@ -46,8 +46,8 @@ function templating(arr){
     result +=`<li class='list-group-item d-flex justify-content-between' id='${ele.todoId}'>
                   <strong>${ele.todoItem}</strong>
                   <div>
-                     <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnEdit(this)'></i>
-                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnRemove(this)' ></i>
+                     <i class="fa-regular fa-pen-to-square fa-2x text-success" onclick='OnEdit(this)'></i>
+                    <i class="fa-solid fa-trash fa-2x text-danger" onclick='OnRemove(this)' ></i>
                   </div>
               </li>
     `     
@@ -74,10 +74,12 @@ function onSubmit(eve){
   
   li.id = newobj.todoId
 
+  todoform.reset()
+
   li.innerHTML =`<strong>${newobj.todoItem}</strong>
                   <div>
-                    <i class="fa-regular fa-pen-to-square fa-2x text-danger" onclick='OnEdit(this)'></i>
-                    <i class="fa-solid fa-trash fa-2x text-primary" onclick='OnRemove(this)' ></i>
+                    <i class="fa-regular fa-pen-to-square fa-2x text-success" onclick='OnEdit(this)'></i>
+                    <i class="fa-solid fa-trash fa-2x text-danger" onclick='OnRemove(this)' ></i>
 
                   </div>`
 
@@ -105,6 +107,48 @@ function OnRemove(ele){
   snackbar(`The Todo Item ${removeObj[0].todoItem} is removed!!!`)
   }
   
+
+}
+
+function OnEdit(ele){
+  let editId = ele.closest('li').id
+
+  localStorage.setItem('editId',editId)
+
+  let editObj = todoArr.find(ele => ele.todoId == editId)
+
+  todoitem.value = editObj.todoItem
+
+  addtodo.classList.add('d-none')
+  updatetodo.classList.remove('d-none')
+
+}
+
+function Onupdate(){
+
+  let updateId = localStorage.getItem('editId')
+
+  let updateObj ={
+    todoItem : todoitem.value,
+    todoId : updateId
+  }
+
+  let index = todoArr.findIndex(ele => ele.todoId == updateId)
+
+  todoArr[index] = updateObj
+
+  localStorage.setItem('todoArr',JSON.stringify(todoArr))
+
+  let li = document.getElementById(updateId).firstElementChild
+
+  li.innerText = updateObj.todoItem
+
+  todoform.reset()
+
+  addtodo.classList.remove('d-none')
+  updatetodo.classList.add('d-none')
+
+
 
 }
 
